@@ -4,7 +4,7 @@ from metacogitor.providers import BaseChatbot
 import pytest
 
 
-class Testbot(
+class MockBaseChatBot(
     BaseChatbot
 ):  # Create an implementation of the BaseChatbot class for testing purposes
     def ask(self, msg: str) -> str:
@@ -20,18 +20,20 @@ class Testbot(
         raise NotImplementedError("The method should be implemented in a subclass.")
 
 
+@pytest.fixture
+def mock_chatbot():
+    return MockBaseChatBot()
+
+
 class TestBaseChatbot:
-    def test_ask_abstract_method(self):
-        chatbot = Testbot()
+    def test_ask_abstract_method(self, mock_chatbot):
         with pytest.raises(NotImplementedError):
-            chatbot.ask("What's the weather today?")
+            mock_chatbot.ask("What's the weather today?")
 
-    def test_ask_batch_abstract_method(self):
-        chatbot = Testbot()
+    def test_ask_batch_abstract_method(self, mock_chatbot):
         with pytest.raises(NotImplementedError):
-            chatbot.ask_batch(["How are you?", "What's your name?"])
+            mock_chatbot.ask_batch(["How are you?", "What's your name?"])
 
-    def test_ask_code_abstract_method(self):
-        chatbot = Testbot()
+    def test_ask_code_abstract_method(self, mock_chatbot):
         with pytest.raises(NotImplementedError):
-            chatbot.ask_code(["How does this work?", "Show me an example code."])
+            mock_chatbot.ask_code(["How does this work?", "Show me an example code."])
