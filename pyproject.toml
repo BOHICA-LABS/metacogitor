@@ -68,5 +68,4 @@ force-wrap-aliases = true
 combine-as-imports = true
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = 'config.environments.basic'
-python_files = ['tests/test_*.py']
+python_files = ['tests/test_*.py', 'tests/**/test_*.py']
