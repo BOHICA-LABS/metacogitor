@@ -1,0 +1,75 @@
+---
+exclude: "^docs/|/migrations/"
+default_stages: [commit]
+
+repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.3.1
+    hooks:
+      - id: pyupgrade
+        args: [--py310-plus]
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.42.0
+    hooks:
+      - id: commitizen
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: check-json
+      - id: check-yaml
+      - id: no-commit-to-branch
+        args: [--branch, main, --branch, develop]
+      - id: end-of-file-fixer
+      - id: forbid-new-submodules
+      - id: trailing-whitespace
+        exclude: ^.bumpversion.cfg
+
+  #- repo: https://github.com/pycqa/isort
+  #  rev: 5.12.0
+  #  hooks:
+  #    - id: isort
+  #      args: [--settings-path, .github/linters/.isort.cfg, --atomic, .]
+
+  # TODO: Reenable this once we get past initial API deliverable
+  #- repo: https://github.com/charliermarsh/ruff-pre-commit
+  #  # Ruff version.
+  #  rev: "v0.0.254"
+  #  hooks:
+  #    - id: ruff
+  # TODO: This has been disable due to speed, either speed up or remove completely
+  #- repo: https://github.com/oxsecurity/megalinter
+  #  rev: v6.19.0 # Git tag specifying the hook, not mega-linter-runner, version
+  #  hooks:
+  #    - id: megalinter-incremental # Faster, less thorough
+  #      stages:
+  #        - commit
+  #    - id: megalinter-full # Slower, more thorough
+  #      # below required until PR #2411 is merged https://github.com/oxsecurity/megalinter/pull/2411
+  #      args:
+  #        - mega-linter-runner
+  #        - --containername
+  #        - "megalinter-full"
+  #        - --remove-container
+  #        - --fix
+  #        - --env
+  #        - "'APPLY_FIXES=all'"
+  #        - --env
+  #        - "'CLEAR_REPORT_FOLDER=true'"
+  #        - --env
+  #        - "'LOG_LEVEL=warning'"
+  #      stages:
+  #        - push
+
+# sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
+ci:
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

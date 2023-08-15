@@ -1,0 +1,21 @@
+[flake8]
+show-source = true
+max-line-length = 120
+application-import-names = clip
+ignore =
+    # Ignore checks, which conflicts with black formatting
+    E203, E402
+    # Ignore W503, which conflicts with PEP 8
+    W503
+extend-ignore = E203
+exclude =
+    .tox,
+    .git,
+    */migrations/*,
+    */static/CACHE/*,
+    docs,
+    node_modules,
+    venv,
+    .venv,
+    docs/source/conf.py
+import-order-style = pycharm

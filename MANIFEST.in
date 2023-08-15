@@ -1,0 +1,81 @@
+# Include folders
+# --------------------------------------------------------------------------------------------------------
+graft src
+graft requirements
+
+# Include files
+# --------------------------------------------------------------------------------------------------------
+include clip/static/*  # This should be redundant, see graft src above
+include clip/locale/*  # This should be redundant, see graft src above
+
+# Exclude folders
+# --------------------------------------------------------------------------------------------------------
+prune scripts
+prune tests/.pytest_cache
+prune megalinter-reports
+prune .github
+prune .idea
+prune .tox
+prune .pytest_cache
+prune .mypy_cache
+prune .coverage
+prune .cache
+prune .vscode
+prune docs
+prune tests
+prune schema
+
+# Global Exclude files
+# --------------------------------------------------------------------------------------------------------
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.so
+global-exclude *.dylib
+global-exclude .DS_Store
+global-exclude *.gpickle
+global-exclude *.coverage.*
+global-exclude *.pem
+global-exclude *.sqlite3
+
+# Include files
+# --------------------------------------------------------------------------------------------------------
+include README.md
+include LICENSE # TODO: Create a License
+
+# Exclude files
+# --------------------------------------------------------------------------------------------------------
+exclude tox.ini
+exclude .bumpversion.cfg
+exclude .readthedocs.yml
+exclude .cruft.json
+exclude *.iml
+exclude db.sqlite3
+exclude .gitignore
+exclude .gitattributes
+exclude .cspell.json
+exclude .editorconfig
+exclude .eslintrc-json.json
+exclude .flake8
+exclude .gitleaks.toml
+exclude .gitleaksignore
+exclude .isort.cfg
+exclude .jscpd.json
+exclude .markdown-link-check.json
+exclude .markdownlint.json
+exclude .mega-linter.yml
+exclude .mypy.ini
+exclude .pre-commit-config.yaml
+exclude .pylintrc
+exclude .secretlintignore
+exclude .secretlintrc.json
+exclude .yamllint.yml
+exclude .bandit.yml
+exclude .checkov.yml
+exclude .dockerignore
+exclude .pydocstyle.ini
+
+# Temporary exclude files
+# --------------------------------------------------------------------------------------------------------
+exclude src/clip/config/environments/development.py
+exclude src/clip/config/environments/local.py
+exclude src/clip/config/environments/original.py
