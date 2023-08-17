@@ -1,16 +1,30 @@
 import pytest
 from metacogitor.providers import BaseGPTAPI
+from metacogitor.logs import logger
 
 
 class MockGPTAPI(BaseGPTAPI):
     async def acompletion(self, messages):
         pass
 
-    async def acompletion_text(self, messages, stream=False):
-        pass
+    async def acompletion_text(self, messages, stream=False) -> dict:
+        return messages[1][
+            "content"
+        ]  # we are just replaying message, it's located in 1
 
     def completion(self, messages):
-        pass
+        logger.debug(messages)
+        return {
+            "choices": [
+                {
+                    "message": {
+                        "content": messages[1][
+                            "content"
+                        ],  # we are just replaying message, it's located in 1
+                    }
+                }
+            ]
+        }
 
 
 @pytest.fixture

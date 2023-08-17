@@ -9,8 +9,11 @@
 from abc import abstractmethod
 from typing import Optional
 
-from metagpt.logs import logger
-from metagpt.provider.base_chatbot import BaseChatbot
+from metacogitor.logs import logger
+from metacogitor.providers import BaseChatbot
+
+
+__ALL__ = ["BaseGPTAPI"]
 
 
 class BaseGPTAPI(BaseChatbot):
@@ -74,6 +77,7 @@ class BaseGPTAPI(BaseChatbot):
         """
         message = [self._default_system_msg(), self._user_msg(msg)]
         rsp = self.completion(message)
+        logger.debug(message)
         return self.get_choice_text(rsp)
 
     async def aask(self, msg: str, system_msgs: Optional[list[str]] = None) -> str:
@@ -90,7 +94,6 @@ class BaseGPTAPI(BaseChatbot):
             message = [self._default_system_msg(), self._user_msg(msg)]
         rsp = await self.acompletion_text(message, stream=True)
         logger.debug(message)
-        # logger.debug(rsp)
         return rsp
 
     def _extract_assistant_rsp(self, context):
@@ -109,7 +112,7 @@ class BaseGPTAPI(BaseChatbot):
         :param msgs: A list of input questions.
         :return: A series of generated answers as a concatenated string.
         """
-        context = []
+        context = [self._default_system_msg()]
         for msg in msgs:
             umsg = self._user_msg(msg)
             context.append(umsg)
@@ -126,6 +129,7 @@ class BaseGPTAPI(BaseChatbot):
         :return: A series of generated answers as a concatenated string.
         """
         context = []
+        context = [self._default_system_msg()]
         for msg in msgs:
             umsg = self._user_msg(msg)
             context.append(umsg)
