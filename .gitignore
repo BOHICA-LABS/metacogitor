@@ -216,3 +216,9 @@ ruff-report.txt
 
 # Postgres database instance
 postgresql/
+
+# Ignore .env file
+.env
+
+# Ignore Log files
+logs/
