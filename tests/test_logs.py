@@ -1,13 +1,27 @@
 import pytest
 from metacogitor.logs import define_log_level
 
-print_level = "DEBUG"
-logfile_level = "INFO"
 
-logger = define_log_level(print_level=print_level, logfile_level=logfile_level)
+@pytest.fixture(
+    params=[
+        ("DEBUG", "INFO"),
+        ("INFO", "WARNING"),
+        ("WARNING", "ERROR"),
+        ("ERROR", "CRITICAL"),
+    ]
+)
+def log_levels(request):
+    return request.param
 
-# A simple function for testing logging
-def log_test_function():
+
+@pytest.fixture
+def log_test_setup(log_levels):
+    print_level, logfile_level = log_levels
+    logger = define_log_level(print_level=print_level, logfile_level=logfile_level)
+    return logger
+
+
+def log_test_function(logger):
     logger.debug("Debug message")
     logger.info("Info message")
     logger.warning("Warning message")
@@ -15,21 +29,12 @@ def log_test_function():
     logger.critical("Critical message")
 
 
-def test_log_configuration(caplog):
-
-    log_test_function()
+def test_log_levels(log_test_setup, caplog):
+    logger = log_test_setup
+    log_test_function(logger)
 
     for record in caplog.records:
-        if record.levelname == "DEBUG":
-            assert record.levelno >= 10
-        elif record.levelname == "INFO":
-            assert record.levelno >= 20
-        elif record.levelname == "WARNING":
-            assert record.levelno >= 30
-        elif record.levelname == "ERROR":
-            assert record.levelno >= 40
-        elif record.levelname == "CRITICAL":
-            assert record.levelno >= 50
+        assert record.levelno >= logger.getLevelName(logger.level(record.levelname))
 
 
 # Run tests
