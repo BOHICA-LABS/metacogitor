@@ -1,7 +1,6 @@
 import pytest
 from metacogitor.utils import RateLimiter
 import time
-import asyncio
 
 
 @pytest.fixture
