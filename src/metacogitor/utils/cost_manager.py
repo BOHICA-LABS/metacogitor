@@ -67,6 +67,15 @@ class CostManager(metaclass=Singleton):
         self.total_budget = 0
         """Total budget allowed."""
 
+        self.current_prompt_tokens = 0
+        """Current number of last prompt tokens used."""
+
+        self.current_completion_tokens = 0
+        """Current number of last completion tokens generated."""
+
+        self.current_cost = 0
+        """Current cost of last API call."""
+
     def update_cost(self, prompt_tokens, completion_tokens, model):
         """Update the total cost, prompt tokens, and completion tokens.
 
@@ -76,13 +85,17 @@ class CostManager(metaclass=Singleton):
             model (str): The AI model used.
         """
 
-        self.total_prompt_tokens += prompt_tokens
-        self.total_completion_tokens += completion_tokens
+        self.current_prompt_tokens = prompt_tokens
+        self.current_completion_tokens = completion_tokens
+
+        self.total_prompt_tokens += self.current_prompt_tokens
+        self.total_completion_tokens += self.current_completion_tokens
         cost = (
-            prompt_tokens * TOKEN_COSTS[model]["prompt"]
-            + completion_tokens * TOKEN_COSTS[model]["completion"]
+            self.current_prompt_tokens * TOKEN_COSTS[model]["prompt"]
+            + self.current_completion_tokens * TOKEN_COSTS[model]["completion"]
         ) / 1000
-        self.total_cost += cost
+        self.current_cost = cost
+        self.total_cost += self.current_cost
         logger.info(
             f"Total running cost: ${self.total_cost:.3f} | Max budget: ${CONFIG.max_budget:.3f} | "
             f"Current cost: ${cost:.3f}, prompt_tokens: {prompt_tokens}, completion_tokens: {completion_tokens}"
@@ -129,3 +142,28 @@ class CostManager(metaclass=Singleton):
             self.total_cost,
             self.total_budget,
         )
+
+    def get_current_cost(self) -> Costs:
+        """Get the current cost of last API call.
+
+        Returns:
+            float: The current cost.
+        """
+
+        return Costs(
+            self.current_prompt_tokens,
+            self.current_completion_tokens,
+            self.current_cost,
+            self.total_budget,
+        )
+
+    def reset(self):
+        """Reset the cost manager to initial state."""
+
+        self.total_prompt_tokens = 0
+        self.total_completion_tokens = 0
+        self.total_cost = 0
+        self.total_budget = 0
+        self.current_prompt_tokens = 0
+        self.current_completion_tokens = 0
+        self.current_cost = 0
