@@ -67,7 +67,6 @@ def test_get_current_costs(cost_manager):
     assert costs.total_cost > 0
 
 
-# This is an aggregate of all costs incurred so far (above)
 def test_get_costs(cost_manager):
     cost_manager.reset()
     cost_manager.update_cost(100, 200, "gpt-3.5-turbo")
