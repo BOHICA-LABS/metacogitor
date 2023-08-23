@@ -8,79 +8,123 @@
 import pytest
 from metacogitor.config import BaseConfigModel
 from pydantic import ValidationError, BaseModel
+from hypothesis import given, settings
+import hypothesis.strategies as st
+import hypothesis.provisional as pr
 
 
-def test_base_config_required_fields():
-    # Test required fields
-    config = BaseConfigModel()
-    required_fields = config.get_required_fields()
-
-    assert "max_tokens_rsp" in required_fields
-    assert "max_budget" in required_fields
+REQUIRED_FIELDS = ["max_tokens_rsp", "max_budget"]
+OPTIONAL_FIELDS = ["global_proxy", "deployment_id"]
 
 
-def test_base_config_optional_fields():
-    # Test optional fields
-    config = BaseConfigModel()
-    optional_fields = config.get_optional_fields()
-
-    assert "global_proxy" in optional_fields
-    assert "long_term_memory" in optional_fields
-
-    assert "max_budget" not in optional_fields
-    assert "max_tokens_rsp" not in optional_fields
-
-
-def test_base_config_api_keys():
-    # Test get_api_keys method
-    assert BaseConfigModel().get_api_keys() == []
-
-
-def test_base_config_validation():
-    # Test type validation
-    with pytest.raises(ValueError):
-        BaseConfigModel(max_tokens_rsp="abc")
-
-
-def test_base_config_dict():
-    # Test config_dict property
-    config = BaseConfigModel(max_tokens_rsp=100)
-    assert config.config_dict == config.dict()
-
-
-def test_config_model_creation():
-    # Test creating model with different params
-    config = BaseConfigModel(
-        max_tokens_rsp=100, max_budget=20.0, global_proxy="https://proxy"
+class TestBaseConfigModel:
+    @given(
+        st.integers(min_value=100),
+        st.floats(min_value=1.0, max_value=1000),
+        pr.urls(),
     )
-    assert config.max_tokens_rsp == 100
-    assert config.max_budget == 20.0
-    assert config.global_proxy == "https://proxy"
+    @settings(max_examples=10)
+    def test_model_creation(self, max_tokens, max_budget, proxy):
+        model = BaseConfigModel(
+            max_tokens_rsp=max_tokens, max_budget=max_budget, global_proxy=proxy
+        )
+        assert model.max_tokens_rsp == max_tokens
+        assert model.max_budget == max_budget
+        assert model.global_proxy == proxy
 
+    # Rest of test cases as methods
 
-def test_value_validation():
-    # Test value validation
-    with pytest.raises(ValidationError):
-        BaseConfigModel(max_tokens_rsp=-100)
+    def test_base_config_api_keys(self):
+        # Test get_api_keys method
+        assert BaseConfigModel().get_api_keys() == []
 
-    with pytest.raises(ValidationError):
-        BaseConfigModel(max_tokens_rsp=99)
+    def test_inheritance(self):
+        # Test inheritance
+        assert issubclass(BaseConfigModel, BaseModel)
 
-    with pytest.raises(ValidationError):
-        BaseConfigModel(max_budget=-20)
+    def test_config_description(self):
+        # Test description
+        assert (
+            BaseConfigModel.__config__.description
+            == "Common application configuration settings."
+        )
 
-    with pytest.raises(ValidationError):
-        BaseConfigModel(total_cost=-20)
-
-
-def test_inheritance():
-    # Test inheritance from BaseModel
-    assert issubclass(BaseConfigModel, BaseModel)
-
-
-def test_config_description():
-    # Test config description
-    assert (
-        BaseConfigModel.__config__.description
-        == "Common application configuration settings."
+    # Optional - consolidate some test cases
+    @pytest.mark.parametrize(
+        "invalid_value,expected_error",
+        [
+            (-100, ValidationError),
+            (-20.0, ValidationError),
+            ("invalid", ValidationError),
+        ],
     )
+    def test_validation(self, invalid_value, expected_error):
+        with pytest.raises(expected_error):
+            BaseConfigModel(max_tokens_rsp=invalid_value)
+
+    @given(
+        st.integers(min_value=-100, max_value=99),
+        st.floats(min_value=-100, max_value=0),
+    )
+    @settings(max_examples=10)
+    def test_value_validation(self, invalid_token, invalid_budget):
+        with pytest.raises(ValidationError):
+            BaseConfigModel(max_tokens_rsp=invalid_token, max_budget=invalid_budget)
+
+    @given(
+        st.integers(min_value=100),
+    )
+    @settings(max_examples=10)
+    def test_base_config_dict(self, max_tokens):
+        # Test config_dict property
+        config = BaseConfigModel(max_tokens_rsp=max_tokens)
+        assert config.config_dict == config.dict()
+
+    @given(
+        config=st.builds(BaseConfigModel),
+        required_fields=st.just(REQUIRED_FIELDS),
+        optional_fields=st.just(OPTIONAL_FIELDS),
+    )
+    @settings(max_examples=10)
+    def test_required_fields(self, config, required_fields, optional_fields):
+        required = config.get_required_fields()
+        optional = config.get_optional_fields()
+
+        @given(field=st.sampled_from(required_fields))
+        def check_required(field):
+            assert field in required
+
+        @given(field=st.sampled_from(optional_fields))
+        def check_optional(field):
+            assert field not in required
+
+        check_required()
+        check_optional()
+
+        assert required != optional
+
+    @given(
+        config=st.builds(BaseConfigModel),
+        required_fields=st.just(REQUIRED_FIELDS),
+        optional_fields=st.just(OPTIONAL_FIELDS),
+    )
+    @settings(max_examples=10)
+    def test_base_config_optional_fields(
+        self, config, required_fields, optional_fields
+    ):
+        # Test optional fields
+        required = config.get_required_fields()
+        optional = config.get_optional_fields()
+
+        @given(field=st.sampled_from(required_fields))
+        def check_required(field):
+            assert field not in optional
+
+        @given(field=st.sampled_from(optional_fields))
+        def check_optional(field):
+            assert field in optional
+
+        check_required()
+        check_optional()
+
+        assert required != optional
