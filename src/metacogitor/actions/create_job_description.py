@@ -32,11 +32,11 @@ class CreateJobDescription(Action):
     async def run(self, title: str, description: str) -> ActionOutput:
         """Runs the action to generate search queries.
 
-        Args:
+
+        :param title: The type of diagram to generate.
+        :type title: str
         :param description: The input text.
         :type description: str
-        :param diagram_type: The type of diagram to generate.
-        :type diagram_type: str
         :return: The output of the action.
         :rtype: ActionOutput
         """
