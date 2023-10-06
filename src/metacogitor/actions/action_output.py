@@ -6,42 +6,43 @@ from pydantic import BaseModel, create_model, root_validator, validator
 
 
 class ActionOutput:
-    """
-    Represents the output of an action.
+    """Represents the output of an action.
 
-    Attributes:
-        content (str): The content of the output.
-        instruct_content (BaseModel): The content of the output as a BaseModel.
+    :param content: The content of the output.
+    :type content: str
+    :param instruct_content: The content of the output as a BaseModel.
+    :type instruct_content: BaseModel
     """
 
     content: str
     instruct_content: BaseModel
 
     def __init__(self, content: str, instruct_content: BaseModel):
+        """Initialize the ActionOutput class.
+
+        :param content: The content of the output.
+        :param instruct_content: The content of the output as a BaseModel.
+        """
         self.content = content
         self.instruct_content = instruct_content
 
     @classmethod
     def create_model_class(cls, class_name: str, mapping: Dict[str, Type]):
-        """
-        Create a model class for the ActionOutput class.
+        """Create a model class for the ActionOutput class.
 
-        Args:
-            :param class_name:
-            :param mapping:
-            :return:
+        :param class_name:
+        :param mapping:
+        :return:
         """
         new_class = create_model(class_name, **mapping)
 
         @validator("*", allow_reuse=True)
         def check_name(v, field):
-            """
-            Check the name of the field.
+            """Check the name of the field.
 
-            Args:
-                :param v: The value of the field.
-                :param field: The field.
-                :return: The value of the field.
+            :param v: The value of the field.
+            :param field: The field.
+            :return: The value of the field.
             """
             if field.name not in mapping.keys():
                 raise ValueError(f"Unrecognized block: {field.name}")
@@ -49,12 +50,10 @@ class ActionOutput:
 
         @root_validator(pre=True, allow_reuse=True)
         def check_missing_fields(values):
-            """
-            Check for missing fields.
+            """Check for missing fields.
 
-            Args:
-                :param values: The values of the fields.
-                :return: The values of the fields.
+            :param values: The values of the fields.
+            :return: The values of the fields.
             """
             required_fields = set(mapping.keys())
             missing_fields = required_fields - set(values.keys())
