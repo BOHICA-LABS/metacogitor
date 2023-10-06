@@ -1,3 +1,4 @@
+"""Azure TTS action class."""
 # -*- coding: utf-8 -*-
 
 from azure.cognitiveservices.speech import AudioConfig, SpeechConfig, SpeechSynthesizer
