@@ -1,4 +1,4 @@
-"""Mermaid utility functions."""
+"""MMDC Ink"""
 # -*- coding: utf-8 -*-
 
 import base64
