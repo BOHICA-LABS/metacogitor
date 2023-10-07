@@ -10,8 +10,7 @@ from metacogitor.logs import logger
 async def mermaid_to_file(
     mermaid_code, output_file_without_suffix, width=2048, height=2048
 ) -> int:
-    """
-    Converts the given Mermaid code to various output formats and saves them to files.
+    """Converts the given Mermaid code to various output formats and saves them to files.
 
     :param mermaid_code: The Mermaid code to convert.
     :type mermaid_code: str
