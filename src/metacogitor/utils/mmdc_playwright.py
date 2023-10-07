@@ -13,7 +13,6 @@ async def mermaid_to_file(
     """
     Converts the given Mermaid code to various output formats and saves them to files.
 
-    Args:
     :param mermaid_code: The Mermaid code to convert.
     :type mermaid_code: str
     :param output_file_without_suffix: The output file name without the file extension.
