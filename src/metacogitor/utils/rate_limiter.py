@@ -1,10 +1,6 @@
+"""Rate limiter module for the Metacogitor API client."""
 # -*- coding: utf-8 -*-
-"""
-@Time    : 2023/8/18 23:08
-@Author  : Joshua Magady
-@File    : rate_limiter.py
-@Desc    : This defines the rate limiter class.
-"""
+
 
 import asyncio
 import time
