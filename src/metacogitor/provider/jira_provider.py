@@ -1,5 +1,5 @@
 """JiraProvider is a wrapper around the Jira Python SDK."""
-
+# -*- coding: utf-8 -*-
 
 import jira
 
