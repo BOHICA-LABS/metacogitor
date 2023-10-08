@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+"""Startup example."""
 # -*- coding: utf-8 -*-
 import asyncio
 
