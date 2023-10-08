@@ -6,9 +6,9 @@ from typing import Iterable
 
 from pydantic import BaseModel, Field
 
-from metagpt.memory import Memory
-from metagpt.roles import Role
-from metagpt.schema import Message
+from metacogitor.memory import Memory
+from metacogitor.roles import Role
+from metacogitor.schema import Message
 
 
 class Environment(BaseModel):
