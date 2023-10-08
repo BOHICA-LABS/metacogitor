@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+"""Environment module"""
 # -*- coding: utf-8 -*-
 
 import asyncio
