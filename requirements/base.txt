@@ -1,3 +1,176 @@
-tenacity==8.2.3
-pydantic==1.10.8
-loguru==0.6.0
+# Core libraries
+# ------------------------------------------------------------------------------
+
+# The fundamental package for scientific computing with Python.
+numpy==1.24.3 # https://github.com/numpy/numpy
+
+# Flexible and powerful data analysis / manipulation library for Python, providing labeled data structures
+pandas==2.0.3 # https://github.com/pandas-dev/pandas
+
+# A full-featured YAML processing framework for Python
+PyYAML==6.0 # https://github.com/yaml/pyyaml
+
+# Build system tools
+setuptools==65.6.3 # https://github.com/pypa/setuptools
+
+# A Fast, Extensible Progress Bar for Python and CLI
+tqdm==4.64.0 # https://github.com/tqdm/tqdm
+
+# Data validation using Python type hints
+pydantic==1.10.8 # https://github.com/pydantic/pydantic
+
+# Web libraries
+# ------------------------------------------------------------------------------
+
+# Asynchronous HTTP client/server framework for asyncio and Python
+aiohttp==3.8.4 # https://github.com/aio-libs/aiohttp
+
+# Developer-friendly asynchrony for Django
+channels==4.0.0 # https://github.com/django/channels
+
+# Testing libraries
+# ------------------------------------------------------------------------------
+
+# A full-featured Python testing tool to help you write better programs
+pytest==7.2.2 # https://github.com/pytest-dev/pytest
+
+# Thin-wrapper around the mock package for easier use with pytest
+pytest-mock==3.11.1 # https://github.com/pytest-dev/pytest-mock/
+
+# Documentation and File Management
+# ------------------------------------------------------------------------------
+
+# openpyxl is a Python library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.
+openpyxl==3.1.2 # https://foss.heptapod.net/openpyxl/openpyxl
+
+# Create and modify Word documents with Python
+python_docx==0.8.11 # https://github.com/python-openxml/python-docx
+
+# Beautiful Soup is a library that makes it easy to scrape information from web pages.
+beautifulsoup4==4.12.2 # https://code.launchpad.net/beautifulsoup
+
+# Database clients & Search
+# ------------------------------------------------------------------------------
+
+# the AI-native open-source embedding database
+chromadb==0.4.12 # https://github.com/chroma-core/chroma
+
+# Developer-friendly, serverless vector database for AI applications. Easily add long-term memory to your LLM apps.
+lancedb==0.1.16 # https://github.com/lancedb/lancedb
+
+# Python wrapper for the Meilisearch API (https://www.meilisearch.com/)
+meilisearch==0.21.0 # https://github.com/meilisearch/meilisearch-python
+
+# Python client for Qdrant vector search engine
+qdrant-client==1.4.0 # https://github.com/qdrant/qdrant-client
+
+# Language Processing & Tools
+# ------------------------------------------------------------------------------
+
+# Retrying library for Python
+tenacity==8.2.3  # https://github.com/jd/tenacity
+
+# Building applications with LLMs through composability
+langchain==0.0.231 # https://github.com/langchain-ai/langchain
+
+# tiktoken is a fast BPE tokeniser for use with OpenAI's models.
+tiktoken==0.4.0 # https://github.com/openai/tiktoken
+
+# Utilities
+# ------------------------------------------------------------------------------
+
+# Python Fire is a library for automatically generating command line interfaces (CLIs) from absolutely any Python object.
+fire==0.4.0 # https://github.com/google/python-fire
+
+# Python logging made (stupidly) simple
+loguru==0.6.0 # https://github.com/Delgan/loguru
+
+# Typing & Code Analysis
+# ------------------------------------------------------------------------------
+
+# Runtime inspection utilities for Python typing module
+typing-inspect==0.8.0 # https://github.com/ilevkivskyi/typing_inspect
+
+# Backported and experimental type hints for Python
+typing_extensions==4.5.0 # https://github.com/python/typing_extensions
+
+# A concrete syntax tree parser and serializer library for Python that preserves many aspects of Python's abstract syntax tree
+libcst==1.0.1 # https://github.com/Instagram/LibCST
+
+# Miscellaneous
+# ------------------------------------------------------------------------------
+
+# Unofficial faiss wheel builder
+faiss_cpu==1.7.4 # https://github.com/kyamagu/faiss-wheels
+
+# The official Python library for the OpenAI API
+openai==0.27.8 # https://github.com/openai/openai-python
+
+# The Anthropic Python library provides convenient access to the Anthropic REST API from any Python 3.7+ application.
+anthropic==0.3.6 # https://github.com/anthropics/anthropic-sdk-python
+
+# OpenAI's Code Interpreter in your terminal, running locally
+open-interpreter==0.1.4; python_version>"3.9" # https://github.com/KillianLucas/open-interpreter/
+
+# Technical Analysis Library using Pandas and Numpy
+ta==0.10.2 # https://github.com/bukosabino/ta
+
+# Integrate cutting-edge LLM technology quickly and easily into your apps
+semantic-kernel==0.3.10.dev0 # https://github.com/microsoft/semantic-kernel
+
+# A youtube-dl fork with additional features and fixes
+# TODO: Move to Extras
+yt_dlp==2023.9.24 # https://github.com/yt-dlp/yt-dlp
+
+# Robust Speech Recognition via Large-Scale Weak Supervision
+# TODO: Move to Extras
+openai-whisper==20230918 # https://github.com/openai/whisper
+
+# This library eases the use of the Jira REST API from Python and it has been used in production for years.
+# TODO: Move to Extras
+jira==3.5.2 # https://github.com/pycontribs/jira
+
+# Commented out (consider removing or activating if needed)
+# ------------------------------------------------------------------------------
+
+# This package was the Microsoft Azure Storage bundle.
+# azure_storage==0.37.0 # https://github.com/Azure/azure-sdk-for-python
+
+# The Web framework for perfectionists with deadlines.
+# Django==4.1.5 # https://github.com/django/django
+
+# Reads, queries and modifies Microsoft Word 2007/2008 docx files.
+# docx==0.2.4 # https://github.com/mikemaccana/python-docx
+
+# A library for efficient similarity search and clustering of dense vectors.
+# faiss==1.5.3 # https://github.com/facebookresearch/faiss
+
+#
+#godot==0.1.1 #
+
+# The official Python client library for Google's discovery based APIs.
+# google_api_python_client==2.93.0 # https://github.com/googleapis/google-api-python-client/
+
+# Pygame (the library) is a Free and Open Source python programming language library for making multimedia applications
+# like games built on top of the excellent SDL library. C, Python, Native, OpenGL.
+# pygame==2.1.3 # https://github.com/pygame/pygame
+
+# Python SDK for Milvus. (https://github.com/milvus-io/milvus)
+# pymilvus==2.2.8 # https://github.com/milvus-io/pymilvus
+
+# Multilingual Sentence & Image Embeddings with BERT
+# sentence_transformers==2.2.2 # https://github.com/UKPLab/sentence-transformers
+
+# Open source libraries and APIs to build custom preprocessing pipelines for labeling, training, or production machine
+# learning pipelines.
+# unstructured[local-inference] # https://github.com/Unstructured-IO/unstructured
+
+# Python version of the Playwright testing and automation library.
+# playwright # https://github.com/Microsoft/playwright-python
+
+# A browser automation framework and ecosystem. (https://www.selenium.dev/)
+# selenium>4 # https://github.com/SeleniumHQ/Selenium
+
+# Simplify management of binary drivers for different browsers.
+#webdriver_manager<3.9 # https://github.com/SergeyPirogov/webdriver_manager
+
