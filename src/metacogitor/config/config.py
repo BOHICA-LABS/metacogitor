@@ -1,10 +1,5 @@
+"""Configuration manager for application settings."""
 # -*- coding: utf-8 -*-
-"""
-@Time    : 2023/8/18 15:35
-@Author  : Joshua Magady
-@File    : config.py
-@Desc    : This defines the Config Class.
-"""
 
 import os
 
